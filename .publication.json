@@ -1,7 +1,9 @@
 {
   "owner": "Navigatedhustle",
   "repository": "jarvis-local",
-  "visibility": "PRIVATE",
-  "public_approval": false,
-  "ownership_confirmed": "2026-10-10"
+  "visibility": "PUBLIC",
+  "public_approval": true,
+  "ownership_confirmed": "2026-10-10",
+  "public_approval_date": "2026-10-10",
+  "public_approval_scope": "Explicit owner instruction covering all eleven portfolio repositories"
 }

@@ -1,0 +1,11 @@
+[Unit]
+ConditionPathExists=!%h/Projects/jarvis-local/data/demo-mode
+Description=JARVIS Qwen embedding
+[Service]
+WorkingDirectory=%h/Projects/jarvis-local
+ExecStart=%h/Projects/jarvis-local/runtime/llama-bin/llama-server -m models/Qwen3-Embedding-0.6B-Q8_0.gguf --alias jarvis-embedding --embedding --pooling last --host 127.0.0.1 --port 8182 --ctx-size 4096 --batch-size 4096 --ubatch-size 4096 --parallel 1 --n-gpu-layers 99 --no-webui
+Restart=on-failure
+RestartSec=5
+UMask=0077
+[Install]
+WantedBy=default.target

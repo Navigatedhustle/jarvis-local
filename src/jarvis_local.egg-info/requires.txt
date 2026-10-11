@@ -1,0 +1,17 @@
+fastapi<1,>=0.115
+uvicorn<1,>=0.34
+httpx<1,>=0.28
+pydantic-settings<3,>=2.7
+psycopg[binary,pool]<4,>=3.2
+msal<2,>=1.31
+python-multipart>=0.0.20
+tzdata>=2025.1
+twilio<10,>=9
+pypdf<7,>=6
+websockets<17,>=15
+
+[dev]
+pytest<10,>=8
+pytest-asyncio<2,>=0.25
+ruff>=0.11
+playwright>=1.50

@@ -1,0 +1,6 @@
+* text=auto
+*.sh text eol=lf
+*.py text eol=lf
+*.service text eol=lf
+*.ps1 text eol=crlf
+"JARVIS Master Astra Build Prompt.md" export-ignore

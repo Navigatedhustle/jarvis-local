@@ -1,0 +1,16 @@
+[Unit]
+ConditionPathExists=!%h/Projects/jarvis-local/data/demo-mode
+Description=JARVIS background Nemotron FP8 inference
+StartLimitIntervalSec=600
+StartLimitBurst=3
+[Service]
+WorkingDirectory=%h/Projects/jarvis-local
+ExecStart=/bin/bash %h/Projects/jarvis-local/scripts/model_service.sh background
+ExecStop=/usr/bin/docker stop -t 30 jarvis-background
+Restart=on-failure
+RestartSec=15
+TimeoutStartSec=1800
+TimeoutStopSec=45
+UMask=0077
+[Install]
+WantedBy=default.target

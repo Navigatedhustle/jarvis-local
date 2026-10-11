@@ -1,0 +1,10 @@
+.git
+.venv*
+secrets
+.env*
+data
+logs
+models
+runtime
+node_modules
+frontend/node_modules

@@ -1,0 +1,10 @@
+[Unit]
+Description=Check JARVIS private Outlook browser after boot and recover exits
+
+[Timer]
+OnBootSec=60
+OnUnitActiveSec=60
+Unit=jarvis-outlook-recovery.service
+
+[Install]
+WantedBy=timers.target

@@ -1,0 +1,5 @@
+#!/bin/sh
+set -eu
+cd "$(git rev-parse --show-toplevel)"
+python3 scripts/security_check.py --history
+exec python3 scripts/check_destination.py "$@"

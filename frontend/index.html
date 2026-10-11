@@ -1,0 +1,188 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width,initial-scale=1,viewport-fit=cover"
+    />
+    <meta name="theme-color" content="#09121d" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta
+      name="apple-mobile-web-app-status-bar-style"
+      content="black-translucent"
+    />
+    <link rel="manifest" href="/manifest.webmanifest" />
+    <link rel="icon" href="/icon.svg" type="image/svg+xml" />
+    <meta name="color-scheme" content="dark" />
+    <title>JARVIS | Demo User</title>
+    <meta name="description" content="Your private HP executive workspace." />
+    <link rel="stylesheet" href="/style.css" />
+    <link rel="stylesheet" href="/mobile.css" />
+    <link rel="stylesheet" href="/command.css" />
+    <script defer src="/setup.js"></script>
+    <script defer src="/orb.js"></script>
+    <script defer src="/graph-view.js"></script>
+    <script defer src="/brain-3d.js"></script>
+    <script defer src="/brain-network.js"></script>
+    <script defer src="/workspace.js"></script>
+    <script defer src="/research.js"></script>
+    <script defer src="/packets.js"></script>
+    <script defer src="/speaker-guard.js"></script>
+    <script defer src="/app.js"></script>
+    <script defer src="/mobile.js"></script>
+  </head>
+  <body>
+    <div id="login" class="login">
+      <div class="login-panel">
+        <div class="wordmark">J<span> / </span>JARVIS</div>
+        <div class="eyebrow">YOUR PRIVATE EXECUTIVE ASSISTANT</div>
+        <h1>Welcome back, Demo.</h1>
+        <section id="phone-login" hidden>
+          <p>
+            Connect Tailscale, then pair this phone from your signed-in JARVIS
+            workspace. Your HP password stays with Microsoft.
+          </p>
+          <form id="phone-pair-form">
+            <label for="phone-code">One-time pairing code</label>
+            <input
+              id="phone-code"
+              autocomplete="off"
+              autocapitalize="characters"
+              spellcheck="false"
+              maxlength="24"
+              required
+              placeholder="From JARVIS → Pair phone"
+            />
+            <label
+              ><input id="phone-remember" type="checkbox" /> Keep this browser
+              signed in for 30 days</label
+            >
+            <button class="primary">Pair this phone</button>
+            <p id="phone-pair-error" role="alert"></p>
+          </form>
+          <small
+            >Use this only on your own phone. Without the checkbox, sign-in
+            lasts eight hours. Lock signs this browser out and removes its saved
+            access. Other browsers need their own pairing.</small
+          >
+        </section>
+        <p>
+          Open <strong>JARVIS</strong> from the Windows Start menu. Your
+          launcher signs you in securely through your private connection.
+        </p>
+        <div class="launcher-guide">
+          <strong>Setting things up?</strong>
+          <p>
+            Choose <strong>JARVIS Account Setup</strong> in the same Start menu
+            folder. No access key to copy. Your Microsoft password stays with
+            Microsoft.
+          </p>
+        </div>
+        <details id="manual-access">
+          <summary>Use a local access key instead</summary>
+          <p class="help">
+            This is JARVIS’s private access key, not your HP password or an
+            integration token. Use it only as a recovery fallback on this
+            computer. The Windows launcher is the preferred way to sign in.
+          </p>
+          <form id="login-form">
+            <label for="token">Local access key</label
+            ><input
+              id="token"
+              type="password"
+              autocomplete="off"
+              required
+            /><button class="primary">Unlock workspace</button>
+            <p id="login-error" role="alert"></p>
+          </form>
+        </details>
+        <small
+          >If the launcher is unavailable, reopen it after checking that the
+          Nano is powered on and connected.</small
+        >
+      </div>
+    </div>
+    <div id="workspace" hidden>
+      <aside class="sidebar">
+        <div class="wordmark">J<span> / </span>JARVIS</div>
+        <div class="identity">
+          <span class="avatar">CS</span>
+          <div>
+            Demo User<small>HP · Higher Education & Research</small>
+          </div>
+        </div>
+        <div class="nav-label">WORKSPACE</div>
+        <nav id="navigation" aria-label="Main navigation"></nav>
+        <details class="workspace-more">
+          <summary>More tools</summary>
+          <nav id="secondary-navigation" aria-label="Additional tools"></nav>
+        </details>
+        <div class="sidebar-bottom">
+          <span class="status-dot"></span>PRIVATE · LOCAL FIRST<small
+            >America / Denver</small
+          >
+        </div>
+      </aside>
+      <div class="main-shell">
+        <header>
+          <div class="breadcrumb">
+            WORKSPACE <span>/</span> <b id="section-name">Today</b>
+          </div>
+          <div class="header-right">
+            <span id="clock"></span
+            ><button id="refresh" class="subtle">Refresh</button
+            ><button id="logout" class="subtle">Lock</button>
+            <button id="pair-phone" class="subtle">Pair phone</button>
+          </div>
+        </header>
+        <div class="work-grid">
+          <main id="main" tabindex="-1"></main>
+          <aside class="chat-panel">
+            <div class="chat-heading">
+              <div><span class="status-dot"></span> JARVIS</div>
+              <span class="tag">PRIVATE ASSISTANT</span>
+            </div>
+            <div id="conversation" role="log" aria-live="polite">
+              <article class="assistant-message">
+                <small>JARVIS</small>
+                <p>What deserves your attention? Let’s find out.</p>
+              </article>
+            </div>
+            <div class="suggestions">
+              <button data-prompt="What actually needs my attention today?">
+                What needs me?</button
+              ><button data-prompt="Prepare me for my next meeting.">
+                Next meeting
+              </button>
+            </div>
+            <form id="chat-form">
+              <label class="sr-only" for="chat-input">Message JARVIS</label
+              ><textarea
+                id="chat-input"
+                placeholder="Ask JARVIS…"
+                rows="2"
+                required
+                maxlength="16000"
+              ></textarea>
+              <div class="composer-bottom">
+                <span id="chat-status">One assistant. Your context.</span
+                ><button class="primary" id="send" aria-label="Send message">
+                  Send ↗
+                </button>
+              </div>
+            </form>
+          </aside>
+        </div>
+      </div>
+    </div>
+    <dialog id="detail">
+      <div class="dialog-header">
+        <h2 id="detail-title"></h2>
+        <button id="close-detail" aria-label="Close details">✕</button>
+      </div>
+      <div id="detail-body"></div>
+    </dialog>
+    <div id="toast" role="status" hidden></div>
+  </body>
+</html>

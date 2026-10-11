@@ -1,0 +1,15 @@
+[Unit]
+ConditionPathExists=!%h/Projects/jarvis-local/data/demo-mode
+Description=JARVIS local Parakeet speech recognition
+StartLimitIntervalSec=600
+StartLimitBurst=2
+[Service]
+WorkingDirectory=%h/Projects/jarvis-local
+ExecStart=/bin/bash %h/Projects/jarvis-local/scripts/speech_service.sh stt
+ExecStop=/usr/bin/docker stop -t 20 jarvis-stt
+Restart=on-failure
+RestartSec=20
+TimeoutStopSec=30
+UMask=0077
+[Install]
+WantedBy=default.target

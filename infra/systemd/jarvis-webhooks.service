@@ -1,0 +1,13 @@
+[Unit]
+Description=JARVIS webhook-only ingress target
+[Service]
+WorkingDirectory=%h/Projects/jarvis-local
+EnvironmentFile=%h/Projects/jarvis-local/secrets/runtime.env
+ExecStart=%h/Projects/jarvis-local/.venv/bin/uvicorn jarvis.webhooks:app --host 127.0.0.1 --port 8190 --ws-max-size 65536 --no-access-log
+Restart=on-failure
+RestartSec=5
+UMask=0077
+NoNewPrivileges=true
+PrivateTmp=true
+[Install]
+WantedBy=default.target

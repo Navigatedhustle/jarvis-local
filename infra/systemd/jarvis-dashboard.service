@@ -1,0 +1,13 @@
+[Unit]
+Description=JARVIS private executive dashboard
+After=jarvis-api.service
+[Service]
+WorkingDirectory=%h/Projects/jarvis-local
+ExecStart=%h/Projects/jarvis-local/.venv/bin/uvicorn jarvis.dashboard:app --host 127.0.0.1 --port 3100 --no-access-log
+Restart=on-failure
+RestartSec=5
+UMask=0077
+NoNewPrivileges=true
+PrivateTmp=true
+[Install]
+WantedBy=default.target

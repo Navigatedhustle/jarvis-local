@@ -1,0 +1,16 @@
+[Unit]
+ConditionPathExists=!%h/Projects/jarvis-local/data/demo-mode
+Description=JARVIS shared primary Qwen FP8 inference
+StartLimitIntervalSec=600
+StartLimitBurst=3
+[Service]
+WorkingDirectory=%h/Projects/jarvis-local
+ExecStart=/bin/bash %h/Projects/jarvis-local/scripts/model_service.sh primary
+ExecStop=/usr/bin/docker stop -t 30 jarvis-primary
+Restart=on-failure
+RestartSec=15
+TimeoutStartSec=1800
+TimeoutStopSec=45
+UMask=0077
+[Install]
+WantedBy=default.target

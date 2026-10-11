@@ -1,0 +1,12 @@
+[Unit]
+Description=Recover JARVIS private Outlook browser when enabled
+After=jarvis-api.service
+ConditionPathExists=%h/snap/chromium/common/jarvis-outlook-profile
+
+[Service]
+Type=oneshot
+WorkingDirectory=%h/Projects/Jarvis
+ExecStart=%h/Projects/Jarvis/.venv/bin/python scripts/ensure_outlook_browser.py
+UMask=0077
+TimeoutStartSec=45
+NoNewPrivileges=true

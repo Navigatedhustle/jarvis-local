@@ -68,15 +68,24 @@ def main():
             if not scanner_run(scanner,['dir',d]):return 1
         if a.history:
             for commit in git('rev-list','--all').decode().splitlines():
-                for row in git('ls-tree','-r','-z',commit).split(b'\0'):
-                    if not row:continue
-                    meta,name=row.split(b'\t',1);mode=meta.decode().split()[0]
-                    if name.decode()=='docs/images/synthetic-preview.png':
-                        receipt=json.loads(git('show',commit+':docs/SCREENSHOT-REVIEW.json'))
-                        if not screenshot_verified(git('show',commit+':'+name.decode()),receipt):
-                            print('Publication blocked: screenshot history differs from its reviewed receipt.',file=sys.stderr);return 1
-                    if not allowed(name.decode(),mode):
+                rows=[row for row in git('ls-tree','-r','-z',commit).split(b'\0') if row]
+                historical_names={row.split(b'\t',1)[1].decode() for row in rows}
+                for row in rows:
+                    meta,raw_name=row.split(b'\t',1);mode,kind,blob=meta.decode().split();name=raw_name.decode()
+                    if kind!='blob' or not allowed(name,mode):
                         print('Publication blocked: excluded artifact exists in local history.',file=sys.stderr);return 1
+                    content=git('cat-file','blob',blob)
+                    if len(content)>2*1024*1024:
+                        print('Publication blocked: oversized artifact exists in local history.',file=sys.stderr);return 1
+                    if name=='docs/images/synthetic-preview.png':
+                        receipt=json.loads(git('show',commit+':docs/SCREENSHOT-REVIEW.json'))
+                        if not screenshot_verified(content,receipt):
+                            print('Publication blocked: screenshot history differs from its reviewed receipt.',file=sys.stderr);return 1
+                    elif b'\0' in content[:8192]:
+                        is_font='fonts' in Path(name).parts and name.endswith(('.woff','.woff2','.ttf','.otf'))
+                        has_notice=any(Path(x).parent==Path(name).parent and ('LICENSE' in Path(x).name.upper() or 'NOTICE' in Path(x).name.upper()) for x in historical_names)
+                        if not (is_font and has_notice):
+                            print('Publication blocked: binary artifact or font without notice exists in local history.',file=sys.stderr);return 1
             if not scanner_run(scanner,['git','.','--log-opts=--all']):return 1
         print('Publication checks passed: staged blobs'+(' and all local commit history' if a.history else '')+'. Ownership and asset rights still require review.')
         return 0
